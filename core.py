@@ -98,7 +98,7 @@ def filter_by_keys(d: dict, place: DeltaGenerator, text: str) -> list[int | str]
     a = list(d.keys())
 
     if place.checkbox(text):
-        return [i for i in place.multiselect(' ', a, label_visibility='collapsed')]
+        return list(place.multiselect(' ', a, label_visibility='collapsed'))
     else:
         return a
 
@@ -172,9 +172,8 @@ class Draw:
 
     def __str__(self) -> str:
         s = ''
-        l = len(self.lines)
         z = len(self.zones)
-        if l:
+        if l := len(self.lines):
             s += '\n - ' + plur(l, 'line')
         if z:
             s += '\n - ' + plur(z, 'zone')
@@ -477,7 +476,7 @@ class ColorClassifier:
         self.d = d
         self.names = list(d.keys())
 
-        if len(self.names) > 0:
+        if self.names:
             rgb_mat = np.array(list(d.values())).astype(np.uint8)
             self.ycc = rgb2ycc(rgb_mat)
             self.rgb = [tuple(map(int, i)) for i in rgb_mat]

@@ -92,8 +92,7 @@ def prepare(path: str, place):
     vid = VideoInfo.from_video_path(path)
 
     if which('ffmpeg'):
-        trimmed = place.checkbox('Trim')
-        if trimmed:
+        if trimmed := place.checkbox('Trim'):
             length = int(vid.total_frames / vid.fps)
             begin, end = place.slider(
                 ' ',
